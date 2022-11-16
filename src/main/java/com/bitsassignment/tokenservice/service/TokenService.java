@@ -6,7 +6,6 @@ import com.bitsassignment.tokenservice.repository.RangeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Objects;
 
 @Service
@@ -25,7 +24,7 @@ public class TokenService {
             rangeResponse = RangeResponse.builder().startValue(newRange.getLower()).endValue(newRange.getHigher()).nodeId(nodeId).build();
             rangeRepository.updateRangeAssignment(newRange.getRangeid(), 1,nodeId);
         } else {
-            rangeRepository.invalidateRange(rangeId,1,1);
+            rangeRepository.invalidateRange(rangeId,1);
             Range newRange = getNewRange();
             rangeResponse = RangeResponse.builder().startValue(newRange.getLower()).endValue(newRange.getHigher()).nodeId(nodeId).build();
             rangeRepository.updateRangeAssignment(newRange.getRangeid(), 1,nodeId);
@@ -38,7 +37,7 @@ public class TokenService {
     }
 
     private Integer findRangeIdAndInvalidate(String nodeId) {
-        Range usedRange = rangeRepository.findByNodeAndUsed(nodeId,1);
+        Range usedRange = rangeRepository.findByNodeAndUsedAndExpired(nodeId,1,0);
         return Objects.isNull(usedRange) || Objects.isNull(usedRange.getRangeid()) ? null : usedRange.getRangeid();
     }
 }
