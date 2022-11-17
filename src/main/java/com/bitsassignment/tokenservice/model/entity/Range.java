@@ -19,9 +19,9 @@ public class Range {
     @Id
     private Integer rangeid;
 
-    private Integer lower;
+    private Long lower;
 
-    private Integer higher;
+    private Long higher;
 
     private String node;
 

@@ -11,6 +11,6 @@ import lombok.Data;
 @Builder
 public class RangeResponse {
     private String nodeId;
-    private Integer startValue;
-    private Integer endValue;
+    private Long startValue;
+    private Long endValue;
 }
